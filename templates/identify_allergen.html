@@ -1,0 +1,83 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Specify an Allergen
+{% endblock %}
+
+{% block main %}
+    <form action="/identify" method="post" name="identify">
+
+        <div class="container" style="border:1px solid">
+        <b>Identified allergens</b>
+
+        <table width = "50%">
+            <tr>
+                <th colspan="2">Allergen</th>
+            </tr>
+
+            {% if known_allergens|length < 1 %}
+                <tr>
+                    <td colspan='2'>No allergens currently identified</td>
+                </tr>
+            {% else %}
+                {% for allergen in known_allergens %}
+                    <tr>
+                        <td>{{ allergen.ingredient }}</td>
+                        <td>
+                            <input type="checkbox" name="remove" value="{{ allergen.ingredient }}">
+                        </td>
+                    </tr>
+                {% endfor %}
+            {% endif %}
+            <tr>
+                <td></td>
+                <td>
+                    <button class="btn btn-primary" type="submit" value="delete" name="submit">Delete selected</button>
+                </td>
+            </tr>
+        </table>
+        <p><small>Ingredients entered here will show in red when adding a food to your diary to make it easier to avoid these foods</small></p>
+    </div>
+    <br>
+    <div class="container" style="border:1px solid">
+        <b>Possible Allergens - Select to add to identified list</b>
+
+        <table width="50%">
+            <tr>
+                <th colspan="2">Ingredient</th>
+            </tr>
+            {% if rows|length < 1 %}
+                <tr>
+                    <td colspan="2">No possible allergens identified yet!</td>
+                </tr>
+            {% else %}
+                {% for row in rows %}
+                    <tr>
+                        <td>{{ row.ingredient }}</td>
+                        <td><input type="checkbox" name="allergen" value="{{ row.ingredient }}"></td>
+                    </tr>
+                {% endfor %}
+            {% endif %}
+            <tr>
+                <td></td>
+                <td>
+                    <button class="btn btn-primary" type="submit" value="check" name="submit">Add selected</button>
+                </td>
+            </tr>
+        </table>
+        <p><small>Adding an ingredient to the identified list will allow you to track the foods which this ingredient is in</small></p>
+    </div>
+    <br>
+
+    <div class="container">
+        <b>Or enter the name of an allergen to add </b>
+        <div class="form-group">
+            <label for="searchBrand">Allergen to add: </label>
+            <input autocomplete="off"  class="form-control" id="searchBrand" name="text_allergen" type="text" aria-describedby="seachBrandHelp"/>            </div>
+        <div>
+            <button class="btn btn-primary" type="submit" name="submit" value="text" onclick="return validSearch()">Enter</button>
+        </div>
+        </form>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    search
+{% endblock %}
+
+{% block main %}
+    <div class="container" style="border:1px solid">
+        <h2>
+            Search database for food
+        </h2>
+    <form action="/search" method="post" name="search">
+
+        <div class="form-group">
+            <label for="searchName">Title of food: </label>
+                    <input autocomplete="off" autofocus class="form-control" id="searchName" name="name" placeholder="Name (required)" type="text" aria-describedby="seachNameHelp"/>
+                <div>
+                    <small id="searchNameHelp" class="form-text text-muted">Enter the title of the food as it appears on the packet/label, eg Hummus, Carrot or Pizza Margerita</small>
+                </div>
+        </div>
+        <div class="form-group">
+            <label for="searchBrand">Brand: </label>
+                <input autocomplete="off"  class="form-control" id="searchBrand" name="brand" placeholder="Brand" type="text" aria-describedby="seachBrandHelp"/>
+            <div>
+                <small id="searchBrandHelp" class="form-text text-muted">brand should be the maker eg McVitties or Heinz, if there is no brand enter 'Fresh' or 'Generic'</small>
+            </div>
+        </div>
+        <div>
+            <button class="btn btn-primary" type="submit" onclick="return validSearch()">Search</button>
+        </div>
+    </form>
+    </div>
+{% endblock %}

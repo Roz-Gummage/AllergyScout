@@ -1,0 +1,39 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Diary
+{% endblock %}
+
+{% block main %}
+
+    <p>
+        <h1>
+            Diary
+        </h1>
+    </p>
+
+    <div id="my-calendar"></div>
+
+<script>
+    $(document).ready(function () {
+        $("#my-calendar").zabuto_calendar({
+            ajax: {
+                url: "/fill_diary",
+                modal: true
+            },
+
+            //data: eventData,
+            language: "en",
+            cell_border: true,
+            today: true,
+            weekstartson: 1,
+            action: true,
+            legend: [
+                {type: "text", label: "Allergic event", badge: "00"},
+                {type: "block", label: "Food recorded only"}
+            ],
+        });
+    });
+</script>
+
+{% endblock %}

@@ -1,0 +1,110 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Today
+{% endblock %}
+
+{% block main %}
+
+
+    {% if favorites|length > 0 %}
+     <div class="container" style="border:1px solid">
+        <h3>
+            Add to diary from favorite foods
+        </h3>
+        <form name="send_food" action="/" method="post">
+            <div class="form-group">
+                <label>Food to add:  </label>
+                   <select name="food_id" id="input_" class="form-control">
+                       <option value="" disabled selected>Food</option>
+                       {% for fave in favorites %}
+                        <option value="{{ fave.food_no }}">{{ fave.brand }}, {{ fave.name }}</option>
+                       {% endfor %}
+                    </select>
+                    <br>
+                    <div id="ingredients" style="display:none"></div>
+            </div>
+                <input type="hidden" name="day" id="day_" value="today">
+            <div class="form-group">
+                <label>Time eaten:  </label>
+                    <select name="hour" id="hour_" class="form-control">
+                        <option value="" disabled selected>HH</option>
+                        <option value="01">01</option>
+                        <option value="02">02</option>
+                        <option value="03">03</option>
+                        <option value="04">04</option>
+                        <option value="05">05</option>
+                        <option value="06">06</option>
+                        <option value="07">07</option>
+                        <option value="08">08</option>
+                        <option value="09">09</option>
+                        <option value="10">10</option>
+                        <option value="11">11</option>
+                        <option value="12">12</option>
+                    </select>:
+                    <select name="minute" id="minute_" class="form-control">
+                        <option value="" disabled selected>MM</option>
+                        <option value="00">00</option>
+                        <option value="05">05</option>
+                        <option value="10">10</option>
+                        <option value="15">15</option>
+                        <option value="20">20</option>
+                        <option value="25">25</option>
+                        <option value="30">30</option>
+                        <option value="35">35</option>
+                        <option value="40">40</option>
+                        <option value="45">45</option>
+                        <option value="50">50</option>
+                        <option value="55">55</option>
+                    </select>:
+                    <select name="am_pm" id="am_pm_" class="form-control">
+                        <option value="" disabled selected>AM/PM</option>
+                        <option value="am">AM</option>
+                        <option value="pm">PM</option>
+                    </select>
+            </div>
+                <button class="btn btn-primary" type="submit" onclick="return validDiaryEntry()">Enter</button>
+            </form>
+        <p> <small>ingredients in red are your identified allergens.  To manage ingredients in your identified allergens click <a href = "http://ide50-roz-gummage.cs50.io:8080/identify"> here</a></small></p>
+    </div>
+    <br>
+    <div class="container" style="border:1px solid">
+        <h3>
+            Delete food from favorites
+        </h3>
+        <form name="delete_fave" action="/delete_fave" method="post">
+            <div class="form-group">
+                <label>Select Food:  </label>
+                <select name="food_id" id="input_" class="form-control">
+                    <option value="" disabled selected>Food</option>
+                    {% for fave in favorites %}
+                        <option value="{{ fave.food_no }}">{{ fave.brand }}, {{ fave.name }}</option>
+                    {% endfor %}
+                </select>
+                <br>
+                <div id="ingredients" style="display:none"></div>
+            </div>
+            <button class="btn btn-primary" type="submit">Delete</button>
+        </form>
+    </div>
+    {% else %}
+    <div class="container" style="border:1px solid">
+        <h3>
+            You have not yet selected any favorites
+        </h3>
+        <p>You can add foods to your favorites when selecting them to add to your diary using the <a href="http://ide50-roz-gummage.cs50.io:8080/search">search</a>, just check the box!</p>
+        <p>If your food is not yet in the database, just <a href="http://ide50-roz-gummage.cs50.io:8080/input_food">add it yourself</a></p>
+    </div>
+    {% endif %}
+
+<script type="application/javascript">
+    $(document).ready(function() {
+        $('#input_').change(function () {
+            var food_id = $("#input_ option:selected").val();
+            showIngredients(food_id);
+
+        });
+    });
+</script>
+
+{% endblock %}

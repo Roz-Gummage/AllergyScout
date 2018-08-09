@@ -1,0 +1,52 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Today
+{% endblock %}
+
+{% block main %}
+
+    <p>
+        <h1>
+            {{ text }}
+        </h1>
+    </p>
+    <div>
+        <table>
+            <tr>
+                <th>Time</th>
+                <th>Reactions</th>
+                <th>Foods eaten</th>
+            </tr>
+
+            {% for time in times %}
+                <tr>
+                    <form name="delete_reaction" action="/delete_reaction" method="post">
+                        <td>{{ time["hour"] }}</td>
+                        <td>
+                            {% for react in reactions %}
+                                {% if react["time"] == time["number"] %}
+                                    {{ react["reaction"] }}&nbsp;&nbsp;
+                                    <span class="form-group"> <button class="btn" type="submit" name="submit" value="{{ react['event_id'] }}" onclick="return checkSubmit('this', 'reaction')">Delete</button></span><br>
+                                {% endif %}
+                            {% endfor %}
+                        </td>
+                    </form>
+
+                    <form name="delete_food" action="/delete_food" method="post">
+                        <td>
+                            {% for food in foods %}
+                                {% if food["time"] == time["number"] %}
+                                    {{ food["brand"]|safe }} {{ food["title"]|safe }} &nbsp;&nbsp;
+                                    <span class="form-group"> <button class="btn" type="submit" name="submit" value="{{ food['hist_no'] }}" onclick="return checkSubmit('{{ food["brand"] }}','{{ food["title"] }}', 'diary')">Delete</button></span><br>
+                                {% endif %}
+                            {% endfor %}
+                        </td>
+                    </form>
+                    </tr>
+                {% endfor %}
+            </table>
+
+    </div>
+
+{% endblock %}

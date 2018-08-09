@@ -1,0 +1,40 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Diary
+{% endblock %}
+
+{% block main %}
+
+    <p>
+        <h1>
+            Frequently Asked Questions
+        </h1>
+    </p>
+
+    <div> <!--class="container" style="border:1px solid" -->
+        <table>
+            <tr>
+                <th colspan="2">
+                    FAQ's
+                </th>
+            </tr>
+            {% for quest in questions %}
+                <tr>
+                    <td rowspan="2">
+                        <b>&nbsp;{{ quest["faq_no"] }}&nbsp;</b>
+                    </td>
+                    <td>
+                        <b>{{ quest["question"] }}</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        {{ quest["answer"] }}
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+{% endblock %}

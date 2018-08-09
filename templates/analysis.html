@@ -1,0 +1,67 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Index
+{% endblock %}
+
+{% block main %}
+
+    <div class="container" style="border:1px solid">
+        <h1>
+            Allergens
+        </h1>
+
+        <table>
+            <tr>
+                <th colspan="3">Identified Allergens</th>
+            </tr>
+            {% if allergens|length < 1 %}
+                <tr>
+                    <td colspan="3">No allergens selected yet</td>
+                </tr>
+            {% else %}
+                {% for allergen in allergens %}
+                    <tr>
+                        <td colspan='3'>{{ allergen.ingredient }}</td>
+                    </tr>
+                {% endfor %}
+            {% endif %}
+
+            {% if reds|length > 0 %}
+                <tr>
+                    <th colspan='3'>Most Likely Allergens</th>
+                </tr>
+                <tr>
+                    <th>Ingredient</th>
+                    <th>Times Eaten</th>
+                    <th>Times linked to allergic reaction</th>
+                </tr>
+                {% for red in reds %}
+                <tr>
+                    <td>{{ red.ingredient }}</td>
+                    <td>{{ red.times_eaten }}</td>
+                    <td>{{ red.times_reacted }}</td>
+                </tr>
+                {% endfor %}
+            {% endif %}
+            {% if oranges|length > 0 %}
+                <tr>
+                    <th colspan='3'>Possible Allergens</th>
+                </tr>
+                <tr>
+                    <th>Ingredient</th>
+                    <th>Times Eaten</th>
+                    <th>Times linked to allergic reaction</th>
+                </tr>
+                {% for orange in oranges %}
+                <tr>
+                    <td>{{ orange.ingredient }}</td>
+                    <td>{{ orange.times_eaten }}</td>
+                    <td>{{ orange.times_reacted }}</td>
+                </tr>
+                {% endfor %}
+            {% endif %}
+        </table>
+        <p> <small>To manage ingredients in your identified allergens click <a href = "http://ide50-roz-gummage.cs50.io:8080/identify"> here</a></small></p>
+    </div>
+{% endblock %}

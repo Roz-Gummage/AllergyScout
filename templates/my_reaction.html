@@ -1,0 +1,50 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Create custom reaction
+{% endblock %}
+
+{% block main %}
+    <form action="/my_reaction" method="post" name="my_reaction">
+        <div class="container" style="border:1px solid">
+            <h3>Create a custom reaction</h3>
+            <label for="title">Title new reaction: </label>
+            <input autocomplete="off" autofocus class="form-control" name="title" id="title" type="text" aria-describedby="reaction_name"/>
+
+            <div class="slidecontainer">
+                <p>Start of eating window:</p>
+                      <input type="range" min="0" max="24" value="12" name="start" id="start_slider" step="0.1">
+                      <p>Value: <span id="start_value"></span> hours<br>maximum number of hours before reaction symptoms show</p>
+            </div>
+            <div class="slidecontainer">
+                <p>End reaction window:</p>
+                      <input type="range" min="0" max="24" value="12" name="end" id="end_slider" step="0.1">
+                      <p>Value: <span id="end_value"></span> hours<br>minimum number of hours before reaction symptoms show</p>
+            </div>
+            <div>
+                <button class="btn btn-primary" type="submit" onclick="return validTimes()">Enter</button>
+            </div>
+        </div>
+    </form>
+
+<script>
+  var slider = document.getElementById("start_slider");
+  var start_output = document.getElementById("start_value");
+  start_output.innerHTML = slider.value;
+
+  slider.oninput = function() {
+    start_output.innerHTML = this.value;
+  }
+</script>
+
+<script>
+  var slider = document.getElementById("end_slider");
+  var output = document.getElementById("end_value");
+  output.innerHTML = slider.value;
+
+  slider.oninput = function() {
+    output.innerHTML = this.value;
+  }
+</script>
+
+{% endblock %}

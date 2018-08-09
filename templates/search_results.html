@@ -1,0 +1,91 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Search Results
+{% endblock %}
+
+{% block main %}
+
+    <div class="container" style="border:1px solid">
+        <h2>
+            {{ intro_text }}
+        </h2>
+        <br>
+        <h3>
+            Add to diary?
+        </h3>
+
+        <table>
+            <tr>
+                <th>Food</th>
+                <th>Ingredients</th>
+                <th>Time Eaten</th>
+                <th>Favorite</th>
+                <th>Add to diary</th>
+            </tr>
+            {% for option in options %}
+                <tr>
+                    <td>{{ option.brand }} {{ option.name }}</td>
+                    <td>{{ option.ingred1|safe }}</td>
+
+                    <form name="send_food" action="/" method="post">
+                        <div class="form-group" id="show_{{ option.food_id }}">
+                            <td>
+                                <input type="hidden" name="food_id" id="input_{{ option.food_id }}" value="{{ option.food_id }}"><br>
+                                <input type="hidden" name="day" id="day_{{ option.food_id }}" value="today">
+                                <select class="form-control" name="hour" id="hour_{{ option.food_id }}">
+                                    <option value="" disabled selected>HH</option>
+                                    <option value="01">01</option>
+                                    <option value="02">02</option>
+                                    <option value="03">03</option>
+                                    <option value="04">04</option>
+                                    <option value="05">05</option>
+                                    <option value="06">06</option>
+                                    <option value="07">07</option>
+                                    <option value="08">08</option>
+                                    <option value="09">09</option>
+                                    <option value="10">10</option>
+                                    <option value="11">11</option>
+                                    <option value="12">12</option>
+                                </select>:
+                                <select class="form-control" name="minute" id="minute_{{ option.food_id }}">
+                                    <option value="" disabled selected>MM</option>
+                                    <option value="00">00</option>
+                                    <option value="05">05</option>
+                                    <option value="10">10</option>
+                                    <option value="15">15</option>
+                                    <option value="20">20</option>
+                                    <option value="25">25</option>
+                                    <option value="30">30</option>
+                                    <option value="35">35</option>
+                                    <option value="40">40</option>
+                                    <option value="45">45</option>
+                                    <option value="50">50</option>
+                                    <option value="55">55</option>
+                                </select>:
+                                <select class="form-control" name="am_pm" id="am_pm_{{ option.food_id }}">
+                                    <option value="" disabled selected>AM/PM</option>
+                                    <option value="am">AM</option>
+                                    <option value="pm">PM</option>
+                                </select>
+                            </td>
+                            <td>
+                                {% if option.fave == 0 %}
+                                    <input type="checkbox" name="favorite" value="TRUE"> add to favorites<br>
+                                {% endif %}
+                            </td>
+
+                            <td>
+                                <button class="btn btn-primary" type="submit" onclick="return searchCheck('{{ option.food_id }}')">Enter</button>
+                            </td>
+
+                        </div>
+                    </form>
+                </tr>
+            {% endfor %}
+        </table>
+        <p> <small>ingredients in red are your identified allergens.  To manage ingredients in your identified allergens click <a href = "http://ide50-roz-gummage.cs50.io:8080/identify"> here</a></small></p>
+    </div>
+
+
+{% endblock %}
